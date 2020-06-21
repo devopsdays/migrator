@@ -5,6 +5,7 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/devopsdays/migrator/events"
+	"github.com/devopsdays/migrator/organizers"
 )
 
 func mainPrompt() (err error) {
@@ -28,6 +29,8 @@ func mainPrompt() (err error) {
 			fmt.Println("migrate sponsors")
 		case "Migrate events":
 			events.GetEvent()
+			organizers.MakeOrganizerDirectory("chicago", "2019")
+			organizers.MakeOrganizerIndexFile("chicago", "2019")
 
 		}
 	}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	paths "github.com/devopsdays/migrator/helpers/paths"
+	"github.com/devopsdays/migrator/organizers"
 )
 
 func GetEvent() {
@@ -33,5 +34,6 @@ func GetEvent() {
 	}
 
 	CreateEvent(thisEvent)
+	organizers.MakeOrganizers(teamMembers)
 
 }

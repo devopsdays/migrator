@@ -19,3 +19,17 @@ func TestEventContentPath(t *testing.T) {
 		})
 	})
 }
+
+func TestEventNewContentPath(t *testing.T) {
+
+	Convey("Given a city of New York and a year of 2018", t, func() {
+		city := "new-york"
+		year := "2018"
+
+		testContentPath := EventNewContentPath(city, year)
+
+		Convey("The response should be "+GetWebdir()+"/content/new-events/2018/new-york", func() {
+			So(testContentPath, ShouldEqual, GetWebdir()+"/content/new-events/2018/new-york")
+		})
+	})
+}
