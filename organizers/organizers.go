@@ -56,7 +56,6 @@ func MakeOrganizerIndexFile(city string, year string) (err error) {
 }
 
 func MakeOrganizers(organizers []map[string]string) (err error) {
-	// thisEvent, _ := GetEventInfo(paths.EventDataPath(paths.GetWebdir(), "chicago", "2019"))
 
 	for _, person := range organizers {
 		var thisOrganizer Organizer
@@ -86,7 +85,6 @@ func MakeOrganizers(organizers []map[string]string) (err error) {
 				thisOrganizer.Bio = value
 			}
 		}
-		fmt.Println("----------------------")
 		MakeOrganizerFile("chicago", "2019", thisOrganizer)
 
 	}
@@ -125,7 +123,7 @@ func MakeOrganizerFile(city string, year string, organizer Organizer) (err error
 	if err != nil {
 		return errors.Wrap(err, "Cannot execute template")
 	} else {
-		fmt.Println("Created organizer  file for ", year, " ", city)
+		fmt.Println("Created organizer file for ", year, " ", city, "-", organizer.Title)
 	}
 
 	return

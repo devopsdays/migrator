@@ -7,19 +7,11 @@ import (
 	"github.com/devopsdays/migrator/organizers"
 )
 
-func GetEvent() {
+func GetEvent(city string, year string) {
 
-	thisEvent, _ := GetEventInfo(paths.EventDataPath(paths.GetWebdir(), "chicago", "2019"))
+	thisEvent, _ := GetEventInfo(paths.EventDataPath(paths.GetWebdir(), city, year))
 
 	teamMembers := thisEvent.TeamMembers
-
-	fmt.Println("Team Members")
-	for _, person := range teamMembers {
-		for key, value := range person {
-			fmt.Println(key, ":", value)
-		}
-		fmt.Println("----------------------")
-	}
 
 	navElements := thisEvent.NavElements
 	fmt.Println("Navigation Elements")

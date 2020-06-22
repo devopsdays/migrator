@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 	"text/template"
@@ -22,10 +23,10 @@ type Sponsor struct {
 	Twitter string `yaml:"twitter,omitempty"`
 }
 
-func convertSponsors(sourceDir, destDir string) (err error) {
+func ConvertSponsors(sourceDir, destDir string) (err error) {
 
 	// find the rice.Box
-	templateBox, err := rice.FindBox("templates")
+	templateBox, err := rice.FindBox("sponsor-templates")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,7 +47,8 @@ func convertSponsors(sourceDir, destDir string) (err error) {
 
 		var sponsor Sponsor
 		sponsorFile := filepath.Join(sourceDir, f.Name())
-		sponsorSlug := strings.TrimSuffix(f.Name(), ".yml")
+		// TODO just strip the extension, don't check for it, because it could be yml or yaml
+		sponsorSlug := strings.TrimSuffix(f.Name(), path.Ext(f.Name()))
 		yamlFile, err := ioutil.ReadFile(sponsorFile)
 		if err != nil {
 			panic(err)

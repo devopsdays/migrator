@@ -11,4 +11,19 @@ startdate = "{{ .StartDate }}"
 enddate = "{{ .EndDate }}"
 masthead_background = "{{ .MastheadBackground }}"
 sponsors_accepted = "{{ .SponsorsAccepted }}"
+sponsor_levels = [
+    {{- range .SponsorLevels }}
+    { id = "{{ .id }}", label = "{{ .label }}"{{ with .max}}, max = {{.}}{{end}} },
+    {{- end }}
+]
+sponsors = [
+    {{- range .Sponsors }}
+    { name = "{{ .id}}", level = "{{ .level }}"{{ with .url}}, url = "{{.}}"{{end}} },
+    {{- end }}
+]
+navigation = [
+    {{- range .NavElements }}
+    { name = "{{ .name }}"{{ with .url}}, url = "{{.}}"{{end}} },
+    {{- end }}
+]
 +++

@@ -5,7 +5,7 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/devopsdays/migrator/events"
-	"github.com/devopsdays/migrator/organizers"
+	"github.com/devopsdays/migrator/sponsors"
 )
 
 func mainPrompt() (err error) {
@@ -27,10 +27,9 @@ func mainPrompt() (err error) {
 		switch selection {
 		case "Migrate sponsors":
 			fmt.Println("migrate sponsors")
+			sponsors.ConvertSponsors("/Users/mattstratton/src/github.com/devopsdays/devopsdays-web/data/sponsors/", "/Users/mattstratton/src/github.com/devopsdays/devopsdays-web/content/new-sponsors/")
 		case "Migrate events":
-			events.GetEvent()
-			organizers.MakeOrganizerDirectory("chicago", "2019")
-			organizers.MakeOrganizerIndexFile("chicago", "2019")
+			events.MigrateEvent("chicago", "2019")
 
 		}
 	}
