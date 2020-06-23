@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/devopsdays/migrator/helpers/paths"
+	"github.com/devopsdays/migrator/migrate"
 	"github.com/dimiro1/banner"
 	"github.com/mattn/go-colorable"
 	"github.com/spf13/cobra"
@@ -23,7 +23,7 @@ var myBanner = `
 `
 
 // webdir is the path to the source files for the Hugo website
-var webdir = paths.GetWebdir()
+var webdir = migrate.GetOldWebDir()
 
 var cfgFile string
 
