@@ -12,6 +12,11 @@ import (
 	"github.com/pkg/errors"
 )
 
+// func MigrateOrganizers(city string, year string, organizers []map[string]string) (err errors) {
+
+// 	return nil
+// }
+
 func MakeOrganizerDirectory(city string, year string) (err error) {
 	err = os.MkdirAll(filepath.Join((paths.EventNewContentPath(city, year)), "organizers"), 0755)
 	if err != nil {

@@ -2,12 +2,15 @@ package events
 
 import (
 	"fmt"
-	"html/template"
+	"html"
 	"os"
 	"path/filepath"
+	"strings"
+	"text/template"
 
 	rice "github.com/GeertJohan/go.rice"
-	paths "github.com/devopsdays/devopsdays-cli/helpers/paths"
+	"github.com/devopsdays/migrator/helpers"
+	paths "github.com/devopsdays/migrator/helpers/paths"
 	"github.com/devopsdays/migrator/model"
 	"github.com/pkg/errors"
 )
@@ -45,6 +48,25 @@ func CreateEvent(event model.EventData) (err error) {
 	}
 
 	defer f.Close()
+
+	// TODO: Add a check for the welcome.md file and then do the stuff. Might be better to move this into another function
+
+	sourceContentFilePath := filepath.Join(paths.GetWebdir(), "content", "events", event.Name, "welcome.md")
+
+	thisContent, err := helpers.GetContentFileInfo(sourceContentFilePath)
+	if err != nil {
+		return errors.Wrap(err, "load content failed")
+	}
+
+	city_slug := event.Name
+	event_year := event.Year
+	event_city := CityStrip(city_slug)
+	new_path := fmt.Sprintf("%s/%s", event_year, event_city)
+	// fmt.Println("event slug is: ", city_slug)
+	// fmt.Println("New path is: ", new_path)
+	event.Content = thisContent.Content
+	event.Content = strings.ReplaceAll(event.Content, city_slug, new_path)
+	event.Content = html.UnescapeString(event.Content)
 
 	t.Execute(f, event)
 	if err != nil {

@@ -39,3 +39,7 @@ func validateWebDir(webdir string) bool {
 	}
 	return true
 }
+
+func GetStaticDir() string {
+	return "/Users/mattstratton/src/github.com/devopsdays/devopsdays-web/static/"
+}

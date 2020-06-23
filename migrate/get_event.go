@@ -1,15 +1,14 @@
-package events
+package migrate
 
 import (
 	"fmt"
 
-	paths "github.com/devopsdays/migrator/helpers/paths"
 	"github.com/devopsdays/migrator/organizers"
 )
 
 func GetEvent(city string, year string) { //TODO: this should return an event struct/object, and the CreateEvent() call should be moved to MigrateEvent()
 
-	thisEvent, _ := GetEventInfo(paths.EventDataPath(paths.GetWebdir(), city, year))
+	thisEvent, _ := GetEventInfo(GetEventDataFilePath(city, year))
 
 	teamMembers := thisEvent.TeamMembers
 

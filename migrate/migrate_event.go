@@ -1,4 +1,4 @@
-package events
+package migrate
 
 import (
 	"fmt"

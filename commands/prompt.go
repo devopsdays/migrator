@@ -1,11 +1,7 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/devopsdays/migrator/events"
-	"github.com/devopsdays/migrator/sponsors"
 )
 
 func mainPrompt() (err error) {
@@ -26,10 +22,9 @@ func mainPrompt() (err error) {
 		}
 		switch selection {
 		case "Migrate sponsors":
-			fmt.Println("migrate sponsors")
-			sponsors.ConvertSponsors("/Users/mattstratton/src/github.com/devopsdays/devopsdays-web/data/sponsors/", "/Users/mattstratton/src/github.com/devopsdays/devopsdays-web/content/new-sponsors/")
+			migrateSponsors()
 		case "Migrate events":
-			events.MigrateEvent("chicago", "2019")
+			migrateEvents()
 
 		}
 	}

@@ -18,8 +18,8 @@ func EventContentPath(city, year string) (eventContentPath string) {
 
 // EventNewContentPath returns the path for content for an event based upon city and year
 func EventNewContentPath(city, year string) (eventContentPath string) {
-	// if err := os.MkdirAll(filepath.Join(GetWebdir(), "content", "events", year, city)), 0777); err != nil {
-	// 	log.Fatal(err)
-	// }
+	if err := os.MkdirAll(filepath.Join(GetWebdir(), "content", "new-events", year, city), 0777); err != nil {
+		log.Fatal(err)
+	}
 	return filepath.Join(filepath.Join(GetWebdir(), "content", "new-events", year, city))
 }

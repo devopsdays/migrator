@@ -27,6 +27,9 @@ var webdir = paths.GetWebdir()
 
 var cfgFile string
 
+// Event is the event we will be using - obtained via local flag
+var Event string
+
 // Debug means should we run in debug mode. Duh.
 var Debug bool
 
