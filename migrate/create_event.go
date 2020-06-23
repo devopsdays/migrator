@@ -58,12 +58,12 @@ func CreateEvent(event EventData) (err error) {
 		return errors.Wrap(err, "content template find failed")
 	}
 	// get file contents as string
-	templateString, err := templateBox.String("_index.md.tmpl")
+	templateString, err := templateBox.String("event._index.md.tmpl")
 	if err != nil {
 		return errors.Wrap(err, "Cannot load event template")
 	}
 
-	t, err := template.New("_index.md").Parse(templateString)
+	t, err := template.New("event._index.md").Parse(templateString)
 	if err != nil {
 		return errors.Wrap(err, "Cannot load event template")
 	}
@@ -86,6 +86,8 @@ func CreateEvent(event EventData) (err error) {
 	// TODO: Add a check for the welcome.md file and then do the stuff. Might be better to move this into another function
 
 	sourceContentFilePath := filepath.Join(GetOldEventContentPath(CityStrip(event.Name), event.Year), "welcome.md")
+
+	fmt.Println("source welcome file is ", sourceContentFilePath)
 
 	thisContent, err := GetContentFileInfo(sourceContentFilePath)
 	if err != nil {

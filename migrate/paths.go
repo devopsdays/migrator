@@ -10,7 +10,7 @@ func GetOldWebDir() string {
 }
 
 func GetNewWebDir() string {
-	return "/Users/mattstratton/src/github.com/devopsdays/devopsdays-web"
+	return "/Users/mattstratton/src/migrate/devopsdays-web"
 }
 
 // GetOldEventStaticPath returns the full path of the old static directory for an event
@@ -22,7 +22,7 @@ func GetOldEventStaticPath(city, year string) (eventStaticPath string) {
 
 // GetNewEventStaticPath returns the full path of the new static directory for an event
 func GetNewEventStaticPath(city, year string) (eventStaticPath string) {
-	eventStaticPath = filepath.Join(GetOldWebDir(), "static", "events", year, city)
+	eventStaticPath = filepath.Join(GetNewWebDir(), "static", "events", year, city)
 	return eventStaticPath
 }
 
@@ -34,7 +34,7 @@ func GetOldEventContentPath(city, year string) (oldEventContentPath string) {
 
 // GetNewEventContentPath returns the new path for content for an event based upon city and year
 func GetNewEventContentPath(city, year string) (newEventContentPath string) {
-	return filepath.Join(filepath.Join(GetNewWebDir(), "content", "events", year, city))
+	return filepath.Join(filepath.Join(GetNewWebDir(), "content", "new-events", year, city))
 }
 
 // GetOldSponsorsPath returns the old path for sponsor data files

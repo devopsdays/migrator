@@ -11,6 +11,7 @@ import (
 	"text/template"
 
 	rice "github.com/GeertJohan/go.rice"
+	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
 )
 
@@ -23,7 +24,53 @@ type Sponsor struct {
 	Twitter string `yaml:"twitter,omitempty"`
 }
 
+func PrepSponsorDir(sponsorDir string) (err error) {
+
+	// create the sponsor directory
+
+	err = os.MkdirAll(sponsorDir, 0755)
+
+	if err != nil {
+		errors.Wrap(err, "Make sponsor content directory failed")
+	}
+
+	// find a rice.Box
+	// to compile, cd to organizers directory and run `rice embed-go`
+	templateBox, err := rice.FindBox("templates")
+	if err != nil {
+		return errors.Wrap(err, "content template find failed")
+	}
+	// get file contents as string
+	templateString, err := templateBox.String("headless.index.md.tmpl")
+	if err != nil {
+		return errors.Wrap(err, "Cannot load sponsor index template")
+	}
+
+	t, err := template.New("headless.index.md").Parse(templateString)
+	if err != nil {
+		return errors.Wrap(err, "Cannot load sponsor template")
+	}
+
+	f, err := os.Create(filepath.Join(sponsorDir, "index.md"))
+	if err != nil {
+		return errors.Wrap(err, "Cannot create sponsor index file")
+	}
+
+	defer f.Close()
+
+	t.Execute(f, "")
+	if err != nil {
+		return errors.Wrap(err, "Cannot execute template")
+	} else {
+		fmt.Println("Created sponsor index file")
+	}
+
+	return nil
+
+}
 func ConvertSponsors(sourceDir, destDir string) (err error) {
+
+	PrepSponsorDir(destDir)
 
 	// find the rice.Box
 	templateBox, err := rice.FindBox("templates")

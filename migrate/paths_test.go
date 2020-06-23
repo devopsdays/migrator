@@ -25,7 +25,7 @@ func TestGetNewWebDir(t *testing.T) {
 		testContentPath := GetNewWebDir()
 
 		Convey("The response should be '/Users/mattstratton/src/github.com/devopsdays/devopsdays-web'", func() {
-			So(testContentPath, ShouldEqual, "/Users/mattstratton/src/github.com/devopsdays/devopsdays-web")
+			So(testContentPath, ShouldEqual, "/Users/mattstratton/src/migrate/devopsdays-web")
 		})
 	})
 }
@@ -80,8 +80,8 @@ func TestGetNewEventContentPath(t *testing.T) {
 
 		testContentPath := GetNewEventContentPath(city, year)
 
-		Convey("The response should be "+GetNewWebDir()+"/content/events/2018/new-york-city", func() {
-			So(testContentPath, ShouldEqual, GetNewWebDir()+"/content/events/2018/new-york-city")
+		Convey("The response should be "+GetNewWebDir()+"/content/new-events/2018/new-york-city", func() {
+			So(testContentPath, ShouldEqual, GetNewWebDir()+"/content/new-events/2018/new-york-city")
 		})
 	})
 }

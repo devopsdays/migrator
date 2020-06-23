@@ -13,5 +13,6 @@ require (
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/viper v1.7.0
+	gopkg.in/errgo.v2 v2.1.0
 	gopkg.in/yaml.v2 v2.3.0
 )

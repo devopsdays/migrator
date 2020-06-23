@@ -26,7 +26,7 @@ func MakeOrganizerDirectory(city string, year string) (err error) {
 
 func MakeOrganizerIndexFile(city string, year string) (err error) {
 	// find a rice.Box
-	// to compile, cd to organizers directory and run `rice embed-go`
+	// to compile, cd to migrate directory and run `rice embed-go`
 	templateBox, err := rice.FindBox("templates")
 	if err != nil {
 		return errors.Wrap(err, "content template find failed")
