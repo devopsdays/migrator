@@ -2,8 +2,6 @@ package migrate
 
 import (
 	"fmt"
-
-	"github.com/devopsdays/migrator/organizers"
 )
 
 func GetEvent(city string, year string) { //TODO: this should return an event struct/object, and the CreateEvent() call should be moved to MigrateEvent()
@@ -25,6 +23,6 @@ func GetEvent(city string, year string) { //TODO: this should return an event st
 	}
 
 	CreateEvent(thisEvent)
-	organizers.MakeOrganizers(teamMembers) // TODO: move this to MigrateEvent() (remember to grab setting of teamMembers too)
+	MakeOrganizers(teamMembers) // TODO: move this to MigrateEvent() (remember to grab setting of teamMembers too)
 
 }

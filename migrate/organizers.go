@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	rice "github.com/GeertJohan/go.rice"
-	"github.com/devopsdays/migrator/helpers/paths"
 	"github.com/pkg/errors"
 )
 
@@ -117,7 +116,7 @@ func MakeOrganizerFile(city string, year string, organizer Organizer) (err error
 
 	organizerFileName := strings.ReplaceAll((strings.ToLower(organizer.Title)), " ", "-")
 	organizerFileName += ".md"
-	f, err := os.Create(filepath.Join((paths.EventNewContentPath(city, year)), "organizers", organizerFileName))
+	f, err := os.Create(filepath.Join((GetNewEventContentPath(city, year)), "organizers", organizerFileName))
 	if err != nil {
 		return errors.Wrap(err, "Cannot create event file")
 	}
