@@ -68,6 +68,8 @@ func CreateEvent(event EventData) (err error) {
 		return errors.Wrap(err, "Cannot load event template")
 	}
 
+	fmt.Println("Event name is ", event.Name)
+
 	eventContentPath := GetNewEventContentPath(CityStrip(event.Name), event.Year)
 	err = os.MkdirAll(eventContentPath, 0755)
 	if err != nil {
@@ -83,33 +85,47 @@ func CreateEvent(event EventData) (err error) {
 
 	defer f.Close()
 
-	// TODO: Add a check for the welcome.md file and then do the stuff. Might be better to move this into another function
+	if EventHasWelcomeFile(CityStrip(event.Name), event.Year) {
 
-	sourceContentFilePath := filepath.Join(GetOldEventContentPath(CityStrip(event.Name), event.Year), "welcome.md")
+		sourceContentFilePath := filepath.Join(GetOldEventContentPath(CityStrip(event.Name), event.Year), "welcome.md")
 
-	fmt.Println("source welcome file is ", sourceContentFilePath)
+		fmt.Println("source welcome file is ", sourceContentFilePath)
 
-	thisContent, err := GetContentFileInfo(sourceContentFilePath)
-	if err != nil {
-		return errors.Wrap(err, "load content failed")
+		thisContent, err := GetContentFileInfo(sourceContentFilePath)
+		if err != nil {
+			return errors.Wrap(err, "load content failed")
+		}
+		city_slug := event.Name
+		event_year := event.Year
+		event_city := CityStrip(city_slug)
+		new_path := fmt.Sprintf("%s/%s", event_year, event_city)
+		// fmt.Println("event slug is: ", city_slug)
+		// fmt.Println("New path is: ", new_path)
+		event.Content = thisContent.Content
+		event.Content = strings.ReplaceAll(event.Content, city_slug, new_path)
+		event.Content = html.UnescapeString(event.Content)
 	}
-
-	city_slug := event.Name
-	event_year := event.Year
-	event_city := CityStrip(city_slug)
-	new_path := fmt.Sprintf("%s/%s", event_year, event_city)
-	// fmt.Println("event slug is: ", city_slug)
-	// fmt.Println("New path is: ", new_path)
-	event.Content = thisContent.Content
-	event.Content = strings.ReplaceAll(event.Content, city_slug, new_path)
-	event.Content = html.UnescapeString(event.Content)
 
 	t.Execute(f, event)
 	if err != nil {
 		return errors.Wrap(err, "Cannot execute template")
 	} else {
 		fmt.Println("Created event file for ", event.Name)
+		dataFileName := event.Name + ".yml"
+		dataFilePath := filepath.Join(GetNewWebDir(), "data", "events", dataFileName)
+		// fmt.Println("Deleting file at ", GetEventDataFilePath(CityStrip(event.Name), event.Year))
+		os.Remove(dataFilePath)
+
 	}
 
 	return
+
+}
+
+func EventHasWelcomeFile(city string, year string) (hasWelcomeFile bool) {
+	if _, err := os.Stat(filepath.Join(GetOldEventContentPath(city, year), "welcome.md")); err == nil {
+		fmt.Println("welcome file exists")
+		return true
+	}
+	return false
 }

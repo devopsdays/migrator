@@ -2,6 +2,7 @@ package migrate
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -16,18 +17,49 @@ func MigrateEvent(city string, year string) {
 	if err != nil {
 		errors.Wrap(err, "Create event error!")
 	}
-	MakeOrganizerDirectory(city, year)
-	MakeOrganizerIndexFile(city, year)
-	MakeOrganizers(thisEvent.TeamMembers)
 
-	// add logic to spin through content directory for the event here and then call CopyPlainEventFile() for it
-	CopyPlainEventFile(city, year, "sponsor.md")
-	CopyPlainEventFile(city, year, "speakers.md")
-	os.MkdirAll(filepath.Join(GetNewEventContentPath(city, year), "speakers"), 0755)
-	os.MkdirAll(filepath.Join(GetNewEventContentPath(city, year), "program"), 0755)
+	if EventHasWelcomeFile(city, year) {
+		MakeOrganizerDirectory(city, year)
+		MakeOrganizerIndexFile(city, year)
+		MakeOrganizers(thisEvent.TeamMembers)
 
-	CopyPlainEventFile(city, year, "program/jeff-smith.md")
-	CopyPlainEventFile(city, year, "speakers/jeff-smith.md")
+		if _, err := os.Stat(filepath.Join(GetOldEventContentPath(city, year), "speakers")); err == nil {
+
+			os.MkdirAll(filepath.Join(GetNewEventContentPath(city, year), "speakers"), 0755)
+			speakerFiles, _ := ioutil.ReadDir(filepath.Join(GetOldEventContentPath(city, year), "speakers"))
+			for _, f := range speakerFiles {
+				CopyPlainEventFile(city, year, filepath.Join("speakers", f.Name()))
+			}
+		}
+		if _, err := os.Stat(filepath.Join(GetOldEventContentPath(city, year), "speakers")); err == nil {
+			os.MkdirAll(filepath.Join(GetNewEventContentPath(city, year), "program"), 0755)
+			programFiles, _ := ioutil.ReadDir(filepath.Join(GetOldEventContentPath(city, year), "program"))
+			for _, f := range programFiles {
+				CopyPlainEventFile(city, year, filepath.Join("program", f.Name()))
+			}
+		}
+
+		eventFiles, _ := ioutil.ReadDir(filepath.Join(GetOldEventContentPath(city, year)))
+		for _, f := range eventFiles {
+			if f.IsDir() {
+				fmt.Println("directory!")
+			} else {
+				if f.Name() != "welcome.md" {
+					CopyPlainEventFile(city, year, f.Name())
+
+				}
+			}
+		}
+
+		// delete content/events on destination
+		fmt.Println("removing ", GetLegacyEventContentPath(city, year))
+		os.RemoveAll(GetLegacyEventContentPath(city, year))
+		dataFileName := thisEvent.Name + ".yml"
+		dataFilePath := filepath.Join(GetNewWebDir(), "data", "events", dataFileName)
+		os.Remove(dataFilePath)
+
+	}
+
 	s := []string{year, city}
 	slug := strings.Join(s, "-")
 	err = MoveStaticDir(slug)

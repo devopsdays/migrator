@@ -32,6 +32,14 @@ func GetOldEventContentPath(city, year string) (oldEventContentPath string) {
 	return filepath.Join(GetOldWebDir(), "content", "events", strings.Join(s, ""))
 }
 
+// GetLegacyEventContentPath returns the old path for content for an event based upon city and year
+func GetLegacyEventContentPath(city, year string) (legacyEventContentPath string) {
+	s := []string{strings.TrimSpace(year), "-", strings.Replace(strings.TrimSpace(strings.ToLower(city)), " ", "-", 10)}
+	legacyEventContentPath = filepath.Join(GetNewWebDir(), "content", "events", strings.Join(s, ""))
+	legacyEventContentPath += "/"
+	return legacyEventContentPath
+}
+
 // GetNewEventContentPath returns the new path for content for an event based upon city and year
 func GetNewEventContentPath(city, year string) (newEventContentPath string) {
 	return filepath.Join(filepath.Join(GetNewWebDir(), "content", "new-events", year, city))

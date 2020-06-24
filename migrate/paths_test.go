@@ -72,6 +72,20 @@ func TestGetOldEventContentPath(t *testing.T) {
 	})
 }
 
+func TestGetLegacyEventContentPath(t *testing.T) {
+
+	Convey("Given a city of new-york-city and a year of 2018", t, func() {
+		city := "new-york-city"
+		year := "2018"
+
+		testContentPath := GetLegacyEventContentPath(city, year)
+
+		Convey("The response should be "+GetNewWebDir()+"/content/events/2018-new-york-city/", func() {
+			So(testContentPath, ShouldEqual, GetNewWebDir()+"/content/events/2018-new-york-city/")
+		})
+	})
+}
+
 func TestGetNewEventContentPath(t *testing.T) {
 
 	Convey("Given a city of new-york-city and a year of 2018", t, func() {

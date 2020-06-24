@@ -27,6 +27,12 @@ func CopyPlainEventFile(city string, year string, filename string) (err error) {
 		thisContent.Type = "new-speakers"
 	case "talk":
 		thisContent.Type = "new-talk"
+	case "event":
+		thisContent.Type = "new-event"
+	}
+
+	if filename == "contact.md" {
+		thisContent.Type = "new-contact"
 	}
 
 	templateBox, err := rice.FindBox("templates")

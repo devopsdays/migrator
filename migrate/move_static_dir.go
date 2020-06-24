@@ -16,10 +16,10 @@ func MoveStaticDir(slug string) (err error) {
 	oldStaticDir += "/"
 	newStaticDir := GetNewEventStaticPath(city, year)
 	newStaticDir += "/"
-	if _, err := os.Stat(newStaticDir); err == nil {
-		fmt.Println("New directory already exists")
-		return nil
-	}
+	// if _, err := os.Stat(newStaticDir); err == nil {
+	// 	fmt.Println("New directory already exists")
+	// 	return nil
+	// }
 	err = os.MkdirAll(filepath.Join(GetNewWebDir(), "static", "events", year), 0755)
 	if err != nil {
 		return errors.Wrap(err, "make year static directory failed")
