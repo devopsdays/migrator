@@ -8,7 +8,7 @@ func GetEvent(city string, year string) { //TODO: this should return an event st
 
 	thisEvent, _ := GetEventInfo(GetEventDataFilePath(city, year))
 
-	teamMembers := thisEvent.TeamMembers
+	// teamMembers := thisEvent.TeamMembers
 
 	navElements := thisEvent.NavElements
 	fmt.Println("Navigation Elements")
@@ -23,6 +23,6 @@ func GetEvent(city string, year string) { //TODO: this should return an event st
 	}
 
 	CreateEvent(thisEvent)
-	MakeOrganizers(teamMembers) // TODO: move this to MigrateEvent() (remember to grab setting of teamMembers too)
+	// MakeOrganizers(teamMembers) // TODO: move this to MigrateEvent() (remember to grab setting of teamMembers too)
 
 }

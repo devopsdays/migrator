@@ -34,22 +34,36 @@ func init() {
 		Content: string("+++\nTitle = \"{{ .Title }}\"\nTwitter = \"{{ .Twitter }}\"\nLinkedIn = \"{{ .LinkedIn }}\"\nGitHub = \"{{ .GitHub }}\"\nWebsite = \"{{ .Website }}\"\nEmployer = \"{{ .Employer }}\"\nRole = \"{{ .Role }}\"\nImage = \"{{ .Image }}\"\nGitLab = \"{{ .GitLab }}\"\nFacebook = \"{{ .Facebook }}\"\n+++\n{{ .Bio }}"),
 	}
 	file6 := &embedded.EmbeddedFile{
+		Filename:    "speaker.md.tmpl",
+		FileModTime: time.Unix(1593551922, 0),
+
+		Content: string("+++\ntitle = \"{{ .Name }}\"\ntwitter = \"{{ .Twitter }}\"\ntype = \"new-speaker\"\n{{- with .Image }}\nimage = \"{{ . }}\"\n{{- end }}\n+++\n{{ .Bio }}"),
+	}
+	file7 := &embedded.EmbeddedFile{
 		Filename:    "sponsor.md.tmpl",
 		FileModTime: time.Unix(1592919888, 0),
 
 		Content: string("+++\nname = \"{{ .Name }}\"\nwebsite = \"{{ .Website }}\"\ntwitter = \"{{ .Twitter }}\"\n+++"),
 	}
+	file8 := &embedded.EmbeddedFile{
+		Filename:    "talk.md.tmpl",
+		FileModTime: time.Unix(1593552682, 0),
+
+		Content: string("+++\ntitle = \"{{ .Title }}\"\ntype = \"new-talk\"\n{{- with .Speakers }}\nspeakers = [\n    {{- range . }}\n        \"{{ . }}\",\n    {{- end }}\n]\n{{- end }}\n+++\n{{ .Content }}"),
+	}
 
 	// define dirs
 	dir1 := &embedded.EmbeddedDir{
 		Filename:   "",
-		DirModTime: time.Unix(1592919957, 0),
+		DirModTime: time.Unix(1593546637, 0),
 		ChildFiles: []*embedded.EmbeddedFile{
 			file2, // "content_file.md.tmpl"
 			file3, // "event._index.md.tmpl"
 			file4, // "headless.index.md.tmpl"
 			file5, // "organizer.md.tmpl"
-			file6, // "sponsor.md.tmpl"
+			file6, // "speaker.md.tmpl"
+			file7, // "sponsor.md.tmpl"
+			file8, // "talk.md.tmpl"
 
 		},
 	}
@@ -60,7 +74,7 @@ func init() {
 	// register embeddedBox
 	embedded.RegisterEmbeddedBox(`templates`, &embedded.EmbeddedBox{
 		Name: `templates`,
-		Time: time.Unix(1592919957, 0),
+		Time: time.Unix(1593546637, 0),
 		Dirs: map[string]*embedded.EmbeddedDir{
 			"": dir1,
 		},
@@ -69,7 +83,9 @@ func init() {
 			"event._index.md.tmpl":   file3,
 			"headless.index.md.tmpl": file4,
 			"organizer.md.tmpl":      file5,
-			"sponsor.md.tmpl":        file6,
+			"speaker.md.tmpl":        file6,
+			"sponsor.md.tmpl":        file7,
+			"talk.md.tmpl":           file8,
 		},
 	})
 }

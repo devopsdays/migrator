@@ -59,7 +59,7 @@ func MakeOrganizerIndexFile(city string, year string) (err error) {
 	return
 }
 
-func MakeOrganizers(organizers []map[string]string) (err error) {
+func MakeOrganizers(organizers []map[string]string, city string, year string) (err error) {
 
 	for _, person := range organizers {
 		var thisOrganizer Organizer
@@ -89,7 +89,7 @@ func MakeOrganizers(organizers []map[string]string) (err error) {
 				thisOrganizer.Bio = value
 			}
 		}
-		MakeOrganizerFile("chicago", "2019", thisOrganizer)
+		MakeOrganizerFile(city, year, thisOrganizer)
 
 	}
 	return

@@ -1,0 +1,12 @@
++++
+title = "{{ .Title }}"
+type = "new-talk"
+{{- with .Speakers }}
+speakers = [
+    {{- range . }}
+        "{{ . }}",
+    {{- end }}
+]
+{{- end }}
++++
+{{ .Content }}

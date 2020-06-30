@@ -1,0 +1,9 @@
++++
+title = "{{ .Name }}"
+twitter = "{{ .Twitter }}"
+type = "new-speaker"
+{{- with .Image }}
+image = "{{ . }}"
+{{- end }}
++++
+{{ .Bio }}

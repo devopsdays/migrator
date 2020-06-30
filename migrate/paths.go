@@ -57,6 +57,11 @@ func GetNewSponsorsPath() string {
 
 }
 
+// GetOldEventDataFilesPath returns the full path of the data directory for events in the source
+func GetOldEventDataFilesPath() string {
+	return filepath.Join(GetOldWebDir(), "data", "events")
+}
+
 // GetEventDataFilePath returns the full path the the data directory for events
 func GetEventDataFilePath(city, year string) (eventDataFilePath string) {
 	s := []string{strings.TrimSpace(year), "-", strings.Replace(strings.TrimSpace(strings.ToLower(city)), " ", "-", 10), ".yml"}
@@ -64,4 +69,9 @@ func GetEventDataFilePath(city, year string) (eventDataFilePath string) {
 	// eventDataPath = strings.Join(s, "")
 	// eventDataPath = webdir
 	return eventDataFilePath
+}
+
+// GetEventSpeakerDataFilesPath returns the full path of the data directory for events in the source
+func GetEventSpeakerDataFilesPath(city, year string) string {
+	return filepath.Join(GetOldWebDir(), "data", "speakers", year, city)
 }

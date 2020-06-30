@@ -112,6 +112,18 @@ func TestGetOldSponsorsPath(t *testing.T) {
 	})
 }
 
+func TestGetOldEventDataFilesPath(t *testing.T) {
+
+	Convey("When checking for the old events data directory", t, func() {
+
+		testDataPath := GetOldEventDataFilesPath()
+
+		Convey("The response should be "+GetOldWebDir()+"/data/events", func() {
+			So(testDataPath, ShouldEqual, GetOldWebDir()+"/data/events")
+		})
+	})
+}
+
 func TestGetNewSponsorsPath(t *testing.T) {
 
 	Convey("When checking for the new sponsor directory", t, func() {
@@ -134,6 +146,21 @@ func TestEventDataFilePath(t *testing.T) {
 
 		Convey("The response should be "+GetOldWebDir()+"/data/events/2018-new-york.yml", func() {
 			So(testDataFilePath, ShouldEqual, GetOldWebDir()+"/data/events/2018-new-york.yml")
+		})
+	})
+}
+
+func TestGetEventSpeakerDataFilesPath(t *testing.T) {
+
+	Convey("Given a city of New York and a year of 2018", t, func() {
+		eventSlug := "2018-new-york-city"
+		city := CityStrip(eventSlug)
+		year := YearStrip(eventSlug)
+
+		testSpeakerDataFilePath := GetEventSpeakerDataFilesPath(city, year)
+
+		Convey("The response should be "+GetOldWebDir()+"/data/speakers/2018/new-york-city", func() {
+			So(testSpeakerDataFilePath, ShouldEqual, GetOldWebDir()+"/data/speakers/2018/new-york-city")
 		})
 	})
 }

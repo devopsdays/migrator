@@ -71,5 +71,6 @@ func migrateSponsors() {
 
 func migrateEvents() {
 	fmt.Println("This would migrate all events")
+	migrate.MigrateAllEvents()
 
 }
